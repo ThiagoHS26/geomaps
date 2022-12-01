@@ -1,0 +1,16 @@
+#map { 
+    height: 85vh; 
+    position: relative;
+}
+.inca-qairito{
+    height: 45px;
+}
+#ica_card{
+    position: absolute;
+    z-index: 900;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    bottom: 80px;
+    left: 10px;
+    box-shadow: 5px 10px 18px #888888;
+}
