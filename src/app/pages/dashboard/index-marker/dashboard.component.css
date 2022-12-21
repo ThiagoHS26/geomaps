@@ -3,14 +3,14 @@
     position: relative;
 }
 .inca-qairito{
-    height: 45px;
+    height: 35px;
 }
 #ica_card{
     position: absolute;
     z-index: 900;
-    border: 1px solid #ccc;
+    border: 1px solid rgb(153, 153, 153);
     border-radius: 5px;
     bottom: 80px;
     left: 10px;
-    box-shadow: 5px 10px 18px #888888;
+    box-shadow: 4px 6px 8px #888888;
 }

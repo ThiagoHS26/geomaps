@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DataTablesModule } from 'angular-datatables';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DashboardComponent } from './dashboard/index-marker/dashboard.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PagesComponent } from './pages.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+import { CreateMarkerComponent } from './dashboard/create-marker/create-marker.component';
+import { EditMarkerComponent } from './dashboard/edit-marker/edit-marker.component';
 
 
 
@@ -12,16 +16,23 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     DashboardComponent,
     UsuariosComponent,
-    PagesComponent
+    PagesComponent,
+    CreateMarkerComponent,
+    EditMarkerComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DataTablesModule,
   ],
   exports:[
     DashboardComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    CreateMarkerComponent,
+    EditMarkerComponent
   ]
 })
 export class PagesModule { }

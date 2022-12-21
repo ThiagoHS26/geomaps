@@ -1,0 +1,118 @@
+<div id="map"></div>
+
+<div class="card col-sm-3" id="ica_card">
+    <div class="card-header border-0">
+        <h3 class="card-title ">Índice de calidad del aire (ICA)</h3>
+    </div>
+    <div class="card-body table-responsive p-0">
+        <select class="form-control">
+            <option value="" selected>Riobamba</option>
+        </select>
+        <table class="table table-sm">
+            <thead>
+                <tr style="font-size: 10px;" class="text-center"> 
+                    <th>Buena</th>
+                    <th>Razonable</th>
+                    <th>Regular</th>
+                    <th>Mala</th>
+                    <th>Muy mala</th>
+                    <th>Dañina</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td bgcolor="#53FACA"></td>
+                    <td bgcolor="#09FA17"></td>
+                    <td bgcolor="#BCE503"></td>
+                    <td bgcolor="#F35D01"></td>
+                    <td bgcolor="#F90D02"></td>
+                    <td bgcolor="#AF0378"></td>
+                </tr>
+                <tr class="text-center">
+                    <td>
+                        <img class="inca-qairito" 
+                        src="https://qairamap.qairadrones.com/img/qairito_buena.gif" 
+                        alt="qairito-good">
+                    </td>
+                    <td>
+                        <img class="inca-qairito" 
+                        src="https://qairamap.qairadrones.com/img/qairito_buena.gif" 
+                        alt="qairito-good">
+                    </td>
+                    <td>
+                        <img class="inca-qairito" 
+                        src="https://qairamap.qairadrones.com/img/qairito_mala.gif" 
+                        alt="qairito-bad">
+                    </td>
+                    <td>
+                        <img class="inca-qairito" 
+                        src="https://qairamap.qairadrones.com/img/qairito_cuidado.gif" 
+                        alt="qairito-hazardous">
+                    </td>
+                    <td>
+                        <img class="inca-qairito" 
+                        src="https://qairamap.qairadrones.com/img/qairito_cuidado.gif" 
+                        alt="qairito-hazardous">
+                    </td>
+                    <td>
+                        <img class="inca-qairito" 
+                        src="https://qairamap.qairadrones.com/img/qairito_cuidado.gif" 
+                        alt="qairito-hazardous">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Modal Mostrar Info-->
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Lista de Marcadores</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--Datatable-->
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Estado</th>
+                            <th>Coordenadas</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of marcadores; let i= index;">
+                            <td>{{i+1}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.state}}</td>
+                            <td>{{item.geometry.coordinates}}</td>
+                            <td>
+                                <button class="btn btn-warning btn-xs mr-2" (click)="get_item(item._id)">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button class="btn btn-danger btn-xs" (click)="delete_item(item._id)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--Datatable-->
+            </div>
+            <!-- Opcional puede agregar botones para imprimir en pdf o exportar en xslx
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+            -->
+        </div>
+    </div>
+
+</div>
+<!--Modal Mostrar Info-->
