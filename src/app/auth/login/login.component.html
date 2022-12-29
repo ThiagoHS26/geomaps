@@ -4,10 +4,11 @@
 
         <div class="card-body">
           <p class="login-box-msg font-weight-bold">Ingresa tus credenciales</p>
-          <form >
+          <form (ngSubmit)="login()" [formGroup]="LoginForm" autocomplete="off">
 
+            <small *ngIf="campoNoValido('email')" class="text-danger">Email is required</small>
             <div class="input-group mb-3">
-              <input type="email" class="form-control" placeholder="Correo o usuario" formControlName="email">
+              <input type="email" class="form-control" placeholder="Email" formControlName="email">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>
@@ -15,8 +16,9 @@
               </div>
             </div>
 
+            <small *ngIf="campoNoValido('password')" class="text-danger">Password is required</small>
             <div class="input-group mb-3">
-              <input type="password" class="form-control" placeholder="Contraseña" #password formControlName="password">
+              <input type="password" class="form-control" placeholder="Password" #password formControlName="password">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <a style="cursor: pointer;">

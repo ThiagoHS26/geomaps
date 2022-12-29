@@ -18,7 +18,7 @@ export class PlacesService {
   }
 
   constructor(private _http:HttpClient) { 
-    this.getUserLocation();
+    //this.getUserLocation();
   }
   //Geolocalizacion
   public async getUserLocation():Promise<[number,number]>{

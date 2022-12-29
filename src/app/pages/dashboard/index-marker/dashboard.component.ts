@@ -26,7 +26,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private _placesService:PlacesService,
     private _router:Router
-  ) { }
+  ) { 
+  }
 
   ngOnInit(){
 

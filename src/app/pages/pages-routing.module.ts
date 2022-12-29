@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/index-marker/dashboard.component';
-import { UsuariosComponent } from './usuarios/usuarios.component';
+import { UsuariosComponent } from './dashboard/index-marker/usuarios/usuarios.component';
 import { PagesComponent } from './pages.component';
 import { CreateMarkerComponent } from './dashboard/create-marker/create-marker.component';
 import { EditMarkerComponent } from './dashboard/edit-marker/edit-marker.component';

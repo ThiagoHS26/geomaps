@@ -4,6 +4,10 @@
     <ul class="navbar-nav">
 
       <li class="nav-item d-none d-sm-inline-block">
+        <a *ngIf="token" [routerLink]="['/dashboard/mapas']" class="nav-link">ADMIN</a>
+      </li>
+
+      <li class="nav-item d-none d-sm-inline-block">
         <a [routerLink]="['/dashboard/mapas']" class="nav-link">Dashboard</a>
       </li>
 
@@ -13,14 +17,14 @@
           Mapas
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <a class="dropdown-item" [routerLink]="['/dashboard/añadir-marcador']">Añadir marcador</a>
+          <a *ngIf="token" class="dropdown-item" [routerLink]="['/dashboard/añadir-marcador']">Añadir marcador</a>
           <a class="dropdown-item" data-toggle="modal" data-target="#modal-lg" style="cursor: pointer;">Mostrar lista</a>
         </div>
 
       </div>
 
       <li class="nav-item d-none d-sm-inline-block">
-        <a [routerLink]="['/dashboard/usuarios']" class="nav-link">Usuarios</a>
+        <a *ngIf="token" [routerLink]="['/dashboard/usuarios']" class="nav-link">Usuarios</a>
       </li>
 
     </ul>
@@ -30,9 +34,15 @@
 
       <!-- Iniciar Sesion Dropdown Menu -->
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/login']">
+        <a *ngIf="!token" class="nav-link" [routerLink]="['/login']">
           <i class="fas fa-user"></i>
           Iniciar sesión
+        </a>
+      </li>
+      <li class="nav-item">
+        <a *ngIf="token" class="nav-link" (click)="logout()">
+          <i class="fas fa-arrow-left"></i>
+          <span style="cursor:pointer;"> Logout</span >
         </a>
       </li>
       <!-- Iniciar Sesion Dropdown Menu -->

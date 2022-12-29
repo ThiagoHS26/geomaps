@@ -1,4 +1,4 @@
 export const environment = {
-  roduction: true,
+  production: true,
   urlServer:'http://127.0.0.1:3000/api/map/marker/',
 };
