@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { marker, tileLayer, Map } from 'leaflet';
 import { Marcador } from 'src/app/models/marker.model';
@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   templateUrl: './edit-marker.component.html',
   styleUrls: ['./edit-marker.component.css']
 })
-export class EditMarkerComponent implements OnInit, AfterViewInit {
+export class EditMarkerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public marcador:Marcador;
   public map3:any;
@@ -18,14 +18,14 @@ export class EditMarkerComponent implements OnInit, AfterViewInit {
   public defPoint:any=[-1.6617057696333162, -78.655273310996];
 
   constructor(private _placesSvc:PlacesService, private _route:ActivatedRoute, private _router:Router) { 
-    this.marcador = new Marcador('','',null);
+    this.marcador = new Marcador('','','',null,null,0,0,0,0,0,0,0);
   }
 
   ngOnInit(): void {
     setTimeout(()=>{
       this.get_marker();
       this.reference_marker();
-    },1500);
+    },500);
 
   }
   ngAfterViewInit(): void {
@@ -36,7 +36,7 @@ export class EditMarkerComponent implements OnInit, AfterViewInit {
         maxZoom: 20,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(this.map3);
-    },1500);
+    },500);
   }
 
   
@@ -58,7 +58,7 @@ export class EditMarkerComponent implements OnInit, AfterViewInit {
       );
 
       });
-    },1500);
+    },500);
   }
 
   //buscar detalles del marcador
@@ -66,10 +66,20 @@ export class EditMarkerComponent implements OnInit, AfterViewInit {
     const id = localStorage.getItem('idMarker');
     this._placesSvc.getMarkerById(id).subscribe(
       (res:any)=>{
+        //Complete the form
         let marcadorEdit = res.feature;
         $("#_name").val(marcadorEdit.name);
         $("#_state").val(marcadorEdit.state);
         $("#_coords").val(marcadorEdit.geometry.coordinates);
+        localStorage.setItem('lastCoords',JSON.stringify(marcadorEdit.geometry.coordinates));
+        //ICA dates
+        $("#_carbon_monoxide").val(marcadorEdit.ica_dates.carbon_monoxide);
+        $("#_nitrogen_dioxide").val(marcadorEdit.ica_dates.nitrogen_dioxide);
+        $("#_ozone").val(marcadorEdit.ica_dates.ozone);
+        $("#_hidrogen_sulfide").val(marcadorEdit.ica_dates.hidrogen_sulfide);
+        $("#_sulfur_dioxide").val(marcadorEdit.ica_dates.sulfur_dioxide);
+        $("#_pm_25").val(marcadorEdit.ica_dates.pm_25);
+        $("#_pm_10").val(marcadorEdit.ica_dates.pm_10);
       },
       (error:any)=>{
         console.log(error);
@@ -77,13 +87,28 @@ export class EditMarkerComponent implements OnInit, AfterViewInit {
     );
   }
 
+  //Guardar nuevo marcador
   onSubmit(formMarcador){
+    const lastCoords = JSON.parse(localStorage.getItem('lastCoords'));
+    console.log(lastCoords);
 
+    if(!localStorage.getItem('coordsEdit')){
+      localStorage.setItem('coordsEdit',JSON.stringify(lastCoords));
+    }
     if(formMarcador.valid){
       this._placesSvc.updateMarker({
         _id:localStorage.getItem('idMarker'),
         name:formMarcador.value.name,
         state:formMarcador.value.state,
+        ica_dates:{
+          carbon_monoxide:formMarcador.value.carbon_monoxide,
+          nitrogen_dioxide:formMarcador.value.nitrogen_dioxide,
+          ozone:formMarcador.value.ozone,
+          hidrogen_sulfide:formMarcador.value.hidrogen_sulfide,
+          sulfur_dioxide:formMarcador.value.sulfur_dioxide,
+          pm_25:formMarcador.value.pm_25,
+          pm_10:formMarcador.value.pm_10
+        },
         geometry:{coordinates:JSON.parse(localStorage.getItem('coordsEdit'))}
       }).subscribe(
         (res:any)=>{
@@ -96,6 +121,7 @@ export class EditMarkerComponent implements OnInit, AfterViewInit {
           }).then((result)=>{
             if(result){
               this._router.navigate(['/dashboard/mapas']);
+              localStorage.removeItem('idMarker');
             }
           });
         },
@@ -105,6 +131,12 @@ export class EditMarkerComponent implements OnInit, AfterViewInit {
       );
     }
 
+  }
+
+  ngOnDestroy(): void {
+    localStorage.removeItem('coordsEdit');
+    localStorage.removeItem('lastCoords');
+    localStorage.removeItem('idMarker');
   }
 
 }

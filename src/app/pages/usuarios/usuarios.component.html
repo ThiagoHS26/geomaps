@@ -1,0 +1,214 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Lista de usuarios</h3><br>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarUsuario">
+                            <i class="fas fa-user-plus"></i> Agregar
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombres</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of usuarios; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.email}}</td>
+                                    <td>{{item.role}}</td>
+                                    <td>
+                                        <button class="btn btn-info btn-xs mr-2" (click)="cambiarPass(item._id)"><i class="fas fa-key"></i></button>
+                                        <button class="btn btn-warning btn-xs mr-2" (click)="llenarForm(item._id)"><i class="fas fa-pencil-alt"></i></button>
+                                        <button class="btn btn-danger btn-xs" (click)="eliminarUsuario(item._id)"><i class="fas fa-trash-alt"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--Modal Agregar usuario-->
+                <div class="modal fade" id="agregarUsuario">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Nuevo usuario</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form (ngSubmit)="insertUser()" [formGroup]="RegisterUserForm" autocomplete="off">
+                                    <sub *ngIf="campoNoValido('name')" class="text-danger">Campo requerido</sub>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Nombres" formControlName="name">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-user" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <sub *ngIf="campoNoValido('email')" class="text-danger">Campo requerido</sub>
+                                    <div class="input-group mb-3">
+                                        <input type="email" class="form-control" placeholder="Email" formControlName="email">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-envelope" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <sub *ngIf="campoNoValido('password')" class="text-danger">Campo requerido</sub>
+                                    <div class="input-group mb-3">
+                                        <input type="password" class="form-control" placeholder="Contraseña" formControlName="password">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-lock" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <sub *ngIf="campoNoValido('passwordConfirm')" class="text-danger">Campo requerido</sub>
+                                    <div class="input-group mb-3">
+                                        <input type="password" class="form-control" placeholder="Confirmar contraseña" formControlName="passwordConfirm">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-lock" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <sub *ngIf="campoNoValido('role')" class="text-danger">Campo requerido</sub>
+                                    <div class="input-group mb-3">
+                                        <select class="form-control" formControlName="role">
+                                            <option value="" disabled>SELECCIONAR ROLE</option>
+                                            <option value="Admin">Administrador</option>
+                                            <option value="Editor">Colaborador</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal Agregar usuario-->
+
+                <!--Modal Editar usuario-->
+                <div class="modal fade" id="editarUsuario">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Nuevo usuario</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form (ngSubmit)="editUser()" [formGroup]="EditUserForm" autocomplete="off">
+                                    <sub *ngIf="campoNoValidoFormEdit('name')" class="text-danger">Campo requerido</sub>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Nombres" formControlName="name">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-user" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <sub *ngIf="campoNoValidoFormEdit('email')" class="text-danger">Campo requerido</sub>
+                                    <div class="input-group mb-3">
+                                        <input type="email" class="form-control" placeholder="Email" formControlName="email">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-envelope" style="color: rgb(48, 37, 37);"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <sub *ngIf="campoNoValidoFormEdit('role')" class="text-danger">Campo requerido</sub>
+                                    <div class="input-group mb-3">
+                                        <select class="form-control" formControlName="role">
+                                            <option value="" disabled>SELECCIONAR ROLE</option>
+                                            <option value="Admin">Administrador</option>
+                                            <option value="Editor">Colaborador</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal Editar usuario-->
+
+                <!--Modal Contraseña usuario-->
+                <div class="modal fade" id="cambiarPass">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Cambiar contraseña</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form (ngSubmit)="changePassword()" [formGroup]="ChangePassUser" autocomplete="off">
+                                    <div class="input-group mb-3">
+                                        <input type="password" class="form-control" placeholder="Nueva contraseña" formControlName="newPass">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-lock" style="color: rgb(48, 37, 37);;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <input type="password" class="form-control" placeholder="Confirmar contraseña" formControlName="confirmPass">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-lock" style="color: rgb(48, 37, 37);;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal Contraseña usuario-->
+            </div>
+        </div>
+    </div>
+</section>

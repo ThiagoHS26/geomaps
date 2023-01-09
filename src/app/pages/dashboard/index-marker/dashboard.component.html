@@ -76,14 +76,15 @@
             </div>
             <div class="modal-body">
                 <!--Datatable-->
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" 
+                class="row-border hover">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Nombre</th>
                             <th>Estado</th>
                             <th>Coordenadas</th>
-                            <th>Acciones</th>
+                            <th *ngIf="token" >Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -92,7 +93,7 @@
                             <td>{{item.name}}</td>
                             <td>{{item.state}}</td>
                             <td>{{item.geometry.coordinates}}</td>
-                            <td>
+                            <td *ngIf="token" >
                                 <button class="btn btn-warning btn-xs mr-2" (click)="get_item(item._id)">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
@@ -116,3 +117,109 @@
 
 </div>
 <!--Modal Mostrar Info-->
+<!--Aside-->
+<aside class="content-header" id="card_over">
+    <div id="info_content">
+        <div class="row mb-2">
+            <div class="col-sm-8">
+                <div class="container-fluid">
+                    <textarea style="width: 100%; height: auto; resize:none; border:0; font-weight: bold;
+                    font-size: 16px; text-transform: uppercase; color:black" id="_codigo" type="text" readonly disabled></textarea>
+                </div>
+            </div>
+            <div class="col-sm-4" style="text-align: right !important;">
+                <button class="btn btn-tool" id="btn_card_over">
+                    <i class="fas fa-circle-xmark" style="color: green; 
+                    font-size: 20px !important;"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="card">
+                <div class="card-body">
+                    <label for="">Índice de Calidad del Aire: </label>
+                    <input type="text" id="_ica" readonly disabled><hr>
+
+                    <label for="">Cuidados</label> <br>
+                    <textarea style="width: 100%; resize:none; border:0;" type="text" name="_description" id="_description" readonly disabled></textarea><hr>
+
+                    <label for="">Recomendaciones</label> <br>
+                    <textarea style="width: 100%; resize:none; border:0;" type="text" name="_recomendation" id="_recomendation" readonly disabled></textarea><hr>
+    
+                    <!--Datos ica-->
+                    <div class="panel_box">
+                        <div class="panel_box_item">
+                            <div class="panel_box_item_text">
+                                <label for="">Monoxido de carbono (CO<small style="font-size: 10px; font-weight: bold;">2</small>)</label>
+                            </div>
+                            <div class="panel_box_item_value" id="co2_box">
+                                <input type="text" id="_co2" readonly disabled>
+                            </div>
+                        </div>
+
+                        <div class="panel_box_item">
+                            <div class="panel_box_item_text">
+                                <label for="">Dioxido de Nitrogeno (NO<small style="font-size: 10px; font-weight: bold;">2</small>)</label>
+                            </div>
+                            <div class="panel_box_item_value" id="no2_box">
+                                <input type="text" id="_no2" readonly disabled>
+                            </div>
+                        </div>
+
+                        <div class="panel_box_item">
+                            <div class="panel_box_item_text">
+                                <label for="">Ozono (O<small style="font-size: 10px; font-weight: bold;">3</small>)</label>
+                            </div>
+                            <div class="panel_box_item_value" id="o3_box">
+                                <input type="text" id="_o3" readonly disabled>
+                            </div>
+                        </div>
+
+                        <div class="panel_box_item">
+                            <div class="panel_box_item_text">
+                                <label for="">Sulfuro de Hidrogeno (H<small style="font-size: 10px; font-weight: bold;">2</small>S)</label>
+                            </div>
+                            <div class="panel_box_item_value" id="h2s_box">
+                                <input type="text" id="_h2s" readonly disabled>
+                            </div>
+                        </div>
+
+                        <div class="panel_box_item">
+                            <div class="panel_box_item_text">
+                                <label for="">Dioxido de Azufre (SO<small style="font-size: 10px; font-weight: bold;">2</small>)</label>
+                            </div>
+                            <div class="panel_box_item_value" id="so2_box">
+                                <input type="text" id="_so2" readonly disabled>
+                            </div>
+                        </div>
+
+                        <div class="panel_box_item">
+                            <div class="panel_box_item_text">
+                                <label for="">PM<small style="font-size: 10px; font-weight: bold;">2.5</small></label>
+                            </div>
+                            <div class="panel_box_item_value" id="pm25_box">
+                                <input type="text" id="_pm25" readonly disabled>
+                            </div>
+                        </div>
+
+                        <div class="panel_box_item">
+                            <div class="panel_box_item_text">
+                                <label for="">PM<small style="font-size: 10px; font-weight: bold;">10</small></label>
+                            </div>
+                            <div class="panel_box_item_value" id="pm10_box">
+                                <input type="text" id="_pm10" readonly disabled>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                </div>
+                <div class="card-footer">
+                    <!--Pie del contenido-->
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+    

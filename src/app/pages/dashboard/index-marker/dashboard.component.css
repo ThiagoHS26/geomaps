@@ -1,5 +1,5 @@
 #map { 
-    height: 85vh; 
+    height: 84vh; 
     position: relative;
 }
 .inca-qairito{
@@ -13,4 +13,56 @@
     bottom: 80px;
     left: 10px;
     box-shadow: 4px 6px 8px #888888;
+}
+#card_over{
+    font-size: 14px !important;
+    background-color: #ffff;
+    display: none;
+    border-radius: 5px;
+    margin-top: 60px;
+    width: 320px;
+    height: 83.3vh;
+    overflow-y: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+    overflow: hidden;
+    z-index: 902;
+    box-shadow: 1px 1px 8px 4px #888888;
+}
+#card_over #info_content{
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 83vh;
+}
+#card_over #info_content input{
+    border:0;
+    width: auto;
+}
+/*Ica dates styles*/
+.panel_box{
+    display: flex;
+    flex-wrap: wrap;
+}
+.panel_box_item{
+    border-bottom: 1px dotted #ddd;
+    display: flex;
+    font-size: 13px;
+    justify-content: space-between;
+    padding: 5px 0;
+    width: 100%;
+}
+.panel_box_item_value{
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #fff;
+    width: 45px;
+    padding-left: 9px;
+    padding-right: 5px;
+    padding-top: 1.5px;
+    padding-bottom: 1.5px;
+    text-align: center;
+}
+.panel_box_item_value input{
+    background-color:transparent;
 }

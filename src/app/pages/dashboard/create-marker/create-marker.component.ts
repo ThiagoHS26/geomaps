@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit} from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { geoJSON, icon,Map,Marker,marker,tileLayer } from 'leaflet';
@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   templateUrl: './create-marker.component.html',
   styleUrls: ['./create-marker.component.css']
 })
-export class CreateMarkerComponent implements OnInit, AfterViewInit {
+export class CreateMarkerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public marcador:Marcador;
   public map2:any;
@@ -23,7 +23,7 @@ export class CreateMarkerComponent implements OnInit, AfterViewInit {
   constructor(private _fb:FormBuilder,
     private _router:Router, 
     private _placesSvc: PlacesService,) { 
-      this.marcador = new Marcador('','',null);
+      this.marcador = new Marcador('','','',null,null,0,0,0,0,0,0,0);
     }
 
   ngOnInit():void{
@@ -58,37 +58,53 @@ export class CreateMarkerComponent implements OnInit, AfterViewInit {
   }
   //Add new marker on server
   onSubmit(formMarcador){
+    const coords = JSON.parse(localStorage.getItem('coords'));
     if(formMarcador.valid){
-      this._placesSvc.insertNewMarker({
-        name:formMarcador.value.name,
-        state:formMarcador.value.state,
-        geometry:{coordinates:JSON.parse(localStorage.getItem('coords'))}
-      }).subscribe(
-        (res:any)=>{
-          Swal.fire({
-            icon:'success',
-            title:'Exito!',
-            text:'Marcador agregado',
-            showConfirmButton:false,
-            timer:1000
-          }).then((result)=>{
-            if(result){
-              this._router.navigate(['/dashboard/mapas']);
-            }
-          });
-        },
-        (error:any)=>{
-          Swal.fire({
-            icon:'error',
-            title:'Error',
-            text:'Algo ha ocurrido!',
-            showConfirmButton:false,
-            timer:1500
-          });
-          console.log(error);
-        }
-      );
+      if(coords){
+        this._placesSvc.insertNewMarker({
+          name:formMarcador.value.name,
+          state:formMarcador.value.state,
+          ica_dates:{
+            carbon_monoxide:formMarcador.value.carbon_monoxide,
+            nitrogen_dioxide:formMarcador.value.nitrogen_dioxide,
+            ozone:formMarcador.value.ozone,
+            hidrogen_sulfide:formMarcador.value.hidrogen_sulfide,
+            sulfur_dioxide:formMarcador.value.sulfur_dioxide,
+            pm_25:formMarcador.value.pm_25,
+            pm_10:formMarcador.value.pm_10
+          },
+          geometry:{coordinates:coords}
+        }).subscribe(
+          (res:any)=>{
+            Swal.fire({
+              icon:'success',
+              title:'Exito!',
+              text:'Marcador agregado',
+              showConfirmButton:false,
+              timer:1000
+            }).then((result)=>{
+              if(result){
+                this._router.navigate(['/dashboard/mapas']);
+              }
+            });
+          },
+          (error:any)=>{
+            Swal.fire({
+              icon:'error',
+              title:'Error',
+              text:'Algo ha ocurrido!',
+              showConfirmButton:false,
+              timer:1500
+            });
+            console.log(error);
+          }
+        );
+      }
     }
+  }
+
+  ngOnDestroy(): void {
+    localStorage.removeItem('coords');
   }
 
 }

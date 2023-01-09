@@ -17,41 +17,152 @@
                 <div class="row">
                     <div class="col-md-8">
                         <form #formMarcador="ngForm" (ngSubmit)="onSubmit(formMarcador)">
-                            <div class="card-body">
-                                
-                                <div class="form-group">
-                                    <label>Nombre</label>
-                                    <input class="form-control" type="text" name="name" #name="ngModel" id="_name"
-                                    [(ngModel)]="marcador.name" required>
-                                    <small *ngIf="name.touched && !name.valid" style="color: rgb(170, 3, 3);">
-                                        Campo obligatorio
-                                    </small>
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Información principal</h3>
                                 </div>
-                               
-                                <div class="form-group">
-                                    <label>Estado</label>
-                                    <input class="form-control" type="text" name="state" #state="ngModel" id="_state"
-                                    [(ngModel)]="marcador.state" required>
-                                    <small *ngIf="state.touched && !state.valid" style="color: rgb(170, 3, 3);">
-                                        Campo obligatorio
-                                    </small>
-                                </div>
+                            
+                                <div class="card-body">
+                                    <div class="row">
 
-                                <div class="form-group">
-                                    <label for="">Coordenadas</label>
-                                    <input type="text" class="form-control" readonly value="{{editcurrentlyCoords}}" id="_coords"
-                                    name="geometry" #geometry="ngModel" [(ngModel)]="marcador.geometry">
+                                        <div class="col-sm-4">
+
+                                            <div class="form-group">
+                                                <label>Código</label>
+                                                <input class="form-control" type="text" name="name" #name="ngModel" id="_name" 
+                                                [(ngModel)]="marcador.name" required>
+                                                <sub *ngIf="!name.valid" style="color: rgb(170, 3, 3);">
+                                                    Campo obligatorio
+                                                </sub>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-sm-4">
+
+                                            <div class="form-group">
+                                                <label>Estado</label>
+                                                <select class="form-control" type="text" name="state" #state="ngModel" id="_state"
+                                                [(ngModel)]="marcador.state" required>
+                                                <option value="Activo">Activo</option>
+                                                <option value="Inactivo">Inactivo</option>
+                                                <option value="En mantenimiento">En mantenimiento</option>
+                                                </select>
+                                                <sub *ngIf="!state.valid" style="color: rgb(170, 3, 3);">
+                                                    Campo obligatorio
+                                                </sub>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-sm-4">
+
+                                            <div class="form-group">
+                                                <label for="">Coordenadas</label>
+                                                <input type="text" class="form-control" readonly value="{{editcurrentlyCoords}}" id="_coords"
+                                                name="geometry" #geometry="ngModel" [(ngModel)]="marcador.geometry">
+                                            </div>
+
+                                        </div>
+
+                                    </div>
                                     
                                 </div>
-                                
                             </div>
+                            <!--Formulario de registro de datos ICA-->
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Métricas del ICA (Índice de Calidad del Aire)</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>CO2</label>
+                                                <input class="form-control" type="number" name="carbon_monoxide" #carbon_monoxide="ngModel" id="_carbon_monoxide" 
+                                                [(ngModel)]="marcador.co2" required>
+                                                <sub *ngIf="!carbon_monoxide.valid" style="color: rgb(170, 3, 3);">
+                                                    Campo obligatorio
+                                                </sub>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>NO2</label>
+                                                <input class="form-control" type="number" name="nitrogen_dioxide" #nitrogen_dioxide="ngModel" id="_nitrogen_dioxide"
+                                                [(ngModel)]="marcador.no2" required>
+                                                <sub *ngIf="!nitrogen_dioxide.valid" style="color: rgb(170, 3, 3);">
+                                                    Campo obligatorio
+                                                </sub>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>O3</label>
+                                                <input class="form-control" type="number" name="ozone" #ozone="ngModel" id="_ozone"
+                                                [(ngModel)]="marcador.o3" required>
+                                                <sub *ngIf="!ozone.valid" style="color: rgb(170, 3, 3);">
+                                                    Campo obligatorio
+                                                </sub>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>H2S</label>
+                                                <input class="form-control" type="number" name="hidrogen_sulfide" #hidrogen_sulfide="ngModel" id="_hidrogen_sulfide"
+                                                [(ngModel)]="marcador.h2s" required>
+                                                <sub *ngIf="!hidrogen_sulfide.valid" style="color: rgb(170, 3, 3);">
+                                                    Campo obligatorio
+                                                </sub>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>SO2</label>
+                                                <input class="form-control" type="number" name="sulfur_dioxide" #sulfur_dioxide="ngModel" id="_sulfur_dioxide"
+                                                [(ngModel)]="marcador.so2" required>
+                                                <sub *ngIf="!sulfur_dioxide.valid" style="color: rgb(170, 3, 3);">
+                                                    Campo obligatorio
+                                                </sub>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>PM_15</label>
+                                                <input class="form-control" type="number" name="pm_25" #pm_25="ngModel" id="_pm_25"
+                                                [(ngModel)]="marcador.pm15" required>
+                                                <sub *ngIf="!pm_25.valid" style="color: rgb(170, 3, 3);">
+                                                    Campo obligatorio
+                                                </sub>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>PM_10</label>
+                                                <input class="form-control" type="number" name="pm_10" #pm_10="ngModel" id="_pm_10"
+                                                [(ngModel)]="marcador.pm10" required>
+                                                <sub *ngIf="!pm_10.valid" style="color: rgb(170, 3, 3);">
+                                                    Campo obligatorio
+                                                </sub>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Formulario de registro de datos ICA-->
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button id="btn-submit-marcador" type="submit" class="btn btn-primary" [disabled]="!formMarcador.form.valid">Actualizar</button>
                             </div>
                         </form>
                     </div>
                     <div class="col-md-4">
-                        Ubicar coordenadas en el marcador
+                        <strong>Ubicar coordenadas en el marcador</strong>
                         <div id="map3"></div>
                     </div>
                 </div>

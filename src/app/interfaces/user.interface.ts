@@ -1,7 +1,8 @@
 export interface UserInterface {
-    names:string;
+    name:string;
     email:string;
     role:string;
     password:string;
+    passwordConfirm:string;
     remember:boolean;
 }
