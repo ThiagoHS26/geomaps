@@ -31,33 +31,33 @@
                 <tr class="text-center">
                     <td>
                         <img class="inca-qairito" 
-                        src="https://qairamap.qairadrones.com/img/qairito_buena.gif" 
-                        alt="qairito-good">
+                        src="../../../../assets/dist/img/gifs/BUENA.gif"
+                        alt="buho-buena">
                     </td>
                     <td>
                         <img class="inca-qairito" 
-                        src="https://qairamap.qairadrones.com/img/qairito_buena.gif" 
-                        alt="qairito-good">
+                        src="../../../../assets/dist/img/gifs/RAZONABLE.png" 
+                        alt="buho-razonable">
                     </td>
                     <td>
                         <img class="inca-qairito" 
-                        src="https://qairamap.qairadrones.com/img/qairito_mala.gif" 
-                        alt="qairito-bad">
+                        src="../../../../assets/dist/img/gifs/REGULAR.gif" 
+                        alt="buho-regular">
                     </td>
                     <td>
                         <img class="inca-qairito" 
-                        src="https://qairamap.qairadrones.com/img/qairito_cuidado.gif" 
-                        alt="qairito-hazardous">
+                        src="../../../../assets/dist/img/gifs/MALA.png" 
+                        alt="buho-mala">
                     </td>
                     <td>
                         <img class="inca-qairito" 
-                        src="https://qairamap.qairadrones.com/img/qairito_cuidado.gif" 
-                        alt="qairito-hazardous">
+                        src="../../../../assets/dist/img/gifs/MUYMALA.png" 
+                        alt="buho-muy-mala">
                     </td>
                     <td>
                         <img class="inca-qairito" 
-                        src="https://qairamap.qairadrones.com/img/qairito_cuidado.gif" 
-                        alt="qairito-hazardous">
+                        src="../../../../assets/dist/img/gifs/DAÑINA.png" 
+                        alt="buho-dañina">
                     </td>
                 </tr>
             </tbody>
@@ -94,9 +94,9 @@
                             <td>{{item.state}}</td>
                             <td>{{item.geometry.coordinates}}</td>
                             <td *ngIf="token" >
-                                <button class="btn btn-warning btn-xs mr-2" (click)="get_item(item._id)">
+                                <!--<button class="btn btn-warning btn-xs mr-2" (click)="get_item(item._id)">
                                     <i class="fas fa-pencil-alt"></i>
-                                </button>
+                                </button>-->
                                 <button class="btn btn-danger btn-xs" (click)="delete_item(item._id)">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>

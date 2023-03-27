@@ -61,6 +61,10 @@
                                                 <label for="">Coordenadas</label>
                                                 <input type="text" class="form-control" readonly value="{{editcurrentlyCoords}}" id="_coords"
                                                 name="geometry" #geometry="ngModel" [(ngModel)]="marcador.geometry">
+                                                <button class="btn btn-secondary btn-sm mt-1" id="btn_getCoords" type="button"
+                                                (click)="updateCurrentlyCoords()">
+                                                    Obtener coordenadas
+                                                </button>
                                             </div>
 
                                         </div>
@@ -162,7 +166,6 @@
                         </form>
                     </div>
                     <div class="col-md-4">
-                        <strong>Ubicar coordenadas en el marcador</strong>
                         <div id="map3"></div>
                     </div>
                 </div>

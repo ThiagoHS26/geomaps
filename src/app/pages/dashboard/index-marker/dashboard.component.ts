@@ -15,7 +15,7 @@ declare var $:any;
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
-  public geo:any;
+  myGeolocation:any;
   public map:any;// se carga el mapa
   public data:any;
   public data_point=[];
@@ -35,21 +35,16 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(){
-
     this.put_markers();
-
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
       responsive:true,
       language:{url:'//cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json'}
     };
-
-    
-    setTimeout(()=>{
-      //this.geo = this._placesService.useLocation;
-    },500);
   }
+
+
   //Riobamba
   ngAfterViewInit(){
     setTimeout(()=>{

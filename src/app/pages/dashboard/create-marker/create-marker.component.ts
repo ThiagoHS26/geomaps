@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { geoJSON, icon,Map,Marker,marker,tileLayer } from 'leaflet';
 import { Marcador } from 'src/app/models/marker.model';
 import { PlacesService } from 'src/app/services';
+import { GeoService } from 'src/app/services/geoLocation.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,14 +16,15 @@ export class CreateMarkerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public marcador:Marcador;
   public map2:any;
-  public defPoint:any=[-1.6617057696333162, -78.655273310996];
+  public newPoint:any=[];
   public currentlyCoords:any;
 
   /*Reactive form */
 
   constructor(private _fb:FormBuilder,
     private _router:Router, 
-    private _placesSvc: PlacesService,) { 
+    private _placesSvc: PlacesService,
+    private _geoSvc: GeoService) { 
       this.marcador = new Marcador('','','',null,null,0,0,0,0,0,0,0);
     }
 
@@ -43,19 +45,28 @@ export class CreateMarkerComponent implements OnInit, AfterViewInit, OnDestroy {
     },1500);
   }
 
+  getCurrentlyCoords(){
+    console.log(this._geoSvc.useLocation);
+    this.currentlyCoords = this._geoSvc.useLocation;
+    localStorage.setItem('coords',JSON.stringify(this.currentlyCoords));
+  }
+
   //Reference marker
   reference_marker(){
     setTimeout(()=>{
-      const miUbicacion = marker(this.defPoint,{draggable:true}).addTo(this.map2);
-      let nuevaUbicacion =  miUbicacion.setLatLng(this.defPoint);
-    
-      miUbicacion.on('moveend',()=>{
+      this.newPoint = JSON.parse(localStorage.getItem('coords'));
+      marker(this.newPoint).addTo(this.map2)
+        .bindPopup('Estás aquí!')
+        .openPopup();
+
+      /*miUbicacion.on('moveend',()=>{
         let moveUbicacion = Object.values(nuevaUbicacion);
         this.currentlyCoords = [moveUbicacion[1].lat,moveUbicacion[1].lng];
         localStorage.setItem('coords',JSON.stringify(this.currentlyCoords));
-      });
-    },1500);
+      });*/
+    },1000);
   }
+
   //Add new marker on server
   onSubmit(formMarcador){
     const coords = JSON.parse(localStorage.getItem('coords'));

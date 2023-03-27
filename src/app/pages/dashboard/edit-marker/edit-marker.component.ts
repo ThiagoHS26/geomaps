@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { marker, tileLayer, Map } from 'leaflet';
 import { Marcador } from 'src/app/models/marker.model';
 import { PlacesService } from 'src/app/services';
+import { GeoService } from 'src/app/services/geoLocation.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,9 +16,10 @@ export class EditMarkerComponent implements OnInit, AfterViewInit, OnDestroy {
   public marcador:Marcador;
   public map3:any;
   public editcurrentlyCoords:any;
-  public defPoint:any=[-1.6617057696333162, -78.655273310996];
 
-  constructor(private _placesSvc:PlacesService, private _route:ActivatedRoute, private _router:Router) { 
+  constructor(private _placesSvc:PlacesService, private _route:ActivatedRoute, 
+    private _geoSvc: GeoService,
+    private _router:Router) { 
     this.marcador = new Marcador('','','',null,null,0,0,0,0,0,0,0);
   }
 
@@ -39,26 +41,23 @@ export class EditMarkerComponent implements OnInit, AfterViewInit, OnDestroy {
     },500);
   }
 
+  updateCurrentlyCoords(){
+    console.log(this._geoSvc.useLocation);
+    this.editcurrentlyCoords = this._geoSvc.useLocation;
+    localStorage.setItem('editCoords',JSON.stringify(this.editcurrentlyCoords));
+  }
   
   reference_marker(){
     setTimeout(()=>{
       const id = localStorage.getItem('idMarker');
       this._placesSvc.getMarkerById(id).subscribe(
         (res:any)=>{
+          
           let editDefPoint = res.feature;
+          const miUbicacion = marker(editDefPoint.geometry.coordinates,{draggable:false}).addTo(this.map3);
 
-          const miUbicacion = marker(editDefPoint.geometry.coordinates,{draggable:true}).addTo(this.map3);
-          let nuevaUbicacion =  miUbicacion.setLatLng(editDefPoint.geometry.coordinates);
-
-          miUbicacion.on('moveend',()=>{
-            let moveUbicacion = Object.values(nuevaUbicacion);
-            this.editcurrentlyCoords = [moveUbicacion[1].lat,moveUbicacion[1].lng];
-            localStorage.setItem('coordsEdit',JSON.stringify(this.editcurrentlyCoords));
-        }
-      );
-
-      });
-    },500);
+      });//subs
+    },500);//sto
   }
 
   //buscar detalles del marcador

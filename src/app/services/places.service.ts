@@ -11,30 +11,7 @@ const URL = environment.urlServer;
 })
 export class PlacesService {
 
-  public useLocation?: [number,number];
-
-  get isUserLocationReady():boolean{
-    return !!this.useLocation;
-  }
-
   constructor(private _http:HttpClient) { 
-    //this.getUserLocation();
-  }
-  //Geolocalizacion
-  public async getUserLocation():Promise<[number,number]>{
-    return new Promise ((resolve,reject)=>{
-      navigator.geolocation.getCurrentPosition(
-        ( {coords} ) => {
-          this.useLocation = [coords.latitude, coords.longitude]
-          resolve(this.useLocation)
-        },
-        (err )=>{
-          alert('No se pudo obtener la geolocalización');
-          console.log(err);
-          reject();
-        }
-      );
-    });
   }
 
   //Get all markers
