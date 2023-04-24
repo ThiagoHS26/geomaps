@@ -26,6 +26,12 @@ export class PlacesService {
     return this._http.post(`${URL}register`,data,{headers:headers});
   }
 
+  //Post excel data
+  insertExcelData(dataExcel):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.post(`${URL}register-excel`,dataExcel,{headers:headers});
+  }
+
   //Get by id
   getMarkerById(id:string):Observable<any>{
     let headers = new HttpHeaders().set('Content-Type','application/json');

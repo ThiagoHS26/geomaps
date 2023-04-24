@@ -66,3 +66,20 @@
 .panel_box_item_value input{
     background-color:transparent;
 }
+
+.nav-ica{
+    border: 1px solid #ccc;
+    align-items: center;
+    text-align: center;
+    padding: 5px;
+    transition: 2.5 ease-in-out;
+}
+
+.nav-ica li{
+    cursor: pointer;
+    list-style: none;
+}
+
+.nav-ica li:hover{
+    font-weight: bold;
+}

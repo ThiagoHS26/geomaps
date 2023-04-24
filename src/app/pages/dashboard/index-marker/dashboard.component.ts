@@ -5,7 +5,9 @@ import * as jQuery from 'jquery';
 import { Marcador } from 'src/app/models/marker.model';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import  Swal  from 'sweetalert2'
+import  Swal  from 'sweetalert2';
+import { ChartDataSets, Chart } from "chart.js";
+import { ChartsModule, Color, Label } from "ng2-charts";
 
 declare var $:any;
 
@@ -15,6 +17,17 @@ declare var $:any;
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  public chart:any;
+  public pointDef:any;
+  public num1:number;
+  public num2:number;
+  public num3:number;
+  public num4:number;
+  public num5:number;
+  public num6:number;
+  public num7:number;
+
   myGeolocation:any;
   public map:any;// se carga el mapa
   public data:any;
@@ -35,6 +48,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(){
+    this.setBar();
     this.put_markers();
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -65,6 +79,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           this.data = res.features;
           this.data.forEach(element => {
             marker(element.geometry.coordinates).on('click',()=>{
+
+              this.pointDef = element._id;
+              const puntoValores:[] = element;
+              this.getValues(puntoValores);
+              
 
               if(element.state === "En mantenimiento"){
                 alert("El marcador está en Mantenimiento");
@@ -301,6 +320,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     },500);
   }
 
+  getValues(lista:any){
+    console.log(lista);
+  }
+
   //Redirected to Edit markers and store in localstorage
   get_item(id:string){
     localStorage.setItem('idMarker',id);
@@ -339,6 +362,46 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             console.log(error);
           }
         );
+      }
+    });
+
+  }
+
+  //Graficas
+
+  getPointId(){
+    const id = this.pointDef;
+   
+  }
+
+  setBar() {
+
+    this.chart = new Chart("chartMap",{
+      type:'line',
+
+      data:{
+        labels:['CO2','NO2','O3','H2S','SO2','PM 2.5','PM 10'],
+        datasets:[
+          {
+            label:'ICA obtenido',// eje  Y
+            data:[10,50,250,300,121,10,55],
+            borderColor: '#36A2EB',
+            backgroundColor: '#9BD0F5',
+          },
+          {
+            label:'ICA normal', // eje X
+            data:[50,50,50,50,50,50,50],
+            borderColor: '#FF6384',
+            backgroundColor: '#FFB1C1',
+          }
+        ]
+      },
+      options:{
+        plugins: {
+          colors: {
+            forceOverride: true
+          }
+        }
       }
     });
 

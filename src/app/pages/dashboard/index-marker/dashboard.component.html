@@ -136,7 +136,9 @@
         </div>
 
         <div class="content">
+
             <div class="card">
+
                 <div class="card-body">
                     <label for="">Índice de Calidad del Aire: </label>
                     <input type="text" id="_ica" readonly disabled><hr>
@@ -148,6 +150,16 @@
                     <textarea style="width: 100%; resize:none; border:0;" type="text" name="_recomendation" id="_recomendation" readonly disabled></textarea><hr>
     
                     <!--Datos ica-->
+                    <ul class="nav-ica d-flex justify-content-between px-5">
+                        <li>
+                            <i class="fas fa-cloud" style="padding-right: 2px;"></i>
+                            ICA
+                        </li>
+                        <li>
+                            <i class="fas fa-chart-line"style="padding-right: 2px;"></i>
+                            Gráficas
+                        </li>
+                    </ul>
                     <div class="panel_box">
                         <div class="panel_box_item">
                             <div class="panel_box_item_text">
@@ -213,6 +225,79 @@
                         </div>
 
                     </div>
+
+                    <!--Datos ICA Graficados-->
+                    <div class="graphics_box">
+                        <div class="panel_box_item">
+                            <div class="panel_box_item_text">
+                                <label for="">Monoxido de carbono (CO<small style="font-size: 10px; font-weight: bold;">2</small>)</label>
+                            </div>
+                            <div class="align-items-center px-3">
+                                <i class="fas fa-eye" style="cursor:pointer;" (click)="getPointId()"
+                                data-toggle="modal" data-target="#modal-grafica"></i>
+                            </div>
+                        </div>
+
+                        <div class="panel_box_item">
+                            <div class="panel_box_item_text">
+                                <label for="">Dioxido de Nitrogeno (NO<small style="font-size: 10px; font-weight: bold;">2</small>)</label>
+                            </div>
+                            <div class="align-items-center px-3">
+                                <i class="fas fa-eye" style="cursor:pointer;"
+                                data-toggle="modal" data-target="#modal-grafica"></i>
+                            </div>
+                        </div>
+
+                        <div class="panel_box_item">
+                            <div class="panel_box_item_text">
+                                <label for="">Ozono (O<small style="font-size: 10px; font-weight: bold;">3</small>)</label>
+                            </div>
+                            <div class="align-items-center px-3">
+                                <i class="fas fa-eye" style="cursor:pointer;"
+                                data-toggle="modal" data-target="#modal-grafica"></i>
+                            </div>
+                        </div>
+
+                        <div class="panel_box_item">
+                            <div class="panel_box_item_text">
+                                <label for="">Sulfuro de Hidrogeno (H<small style="font-size: 10px; font-weight: bold;">2</small>S)</label>
+                            </div>
+                            <div class="align-items-center px-3">
+                                <i class="fas fa-eye" style="cursor:pointer;"
+                                data-toggle="modal" data-target="#modal-grafica"></i>
+                            </div>
+                        </div>
+
+                        <div class="panel_box_item">
+                            <div class="panel_box_item_text">
+                                <label for="">Dioxido de Azufre (SO<small style="font-size: 10px; font-weight: bold;">2</small>)</label>
+                            </div>
+                            <div class="align-items-center px-3">
+                                <i class="fas fa-eye" style="cursor:pointer;"
+                                data-toggle="modal" data-target="#modal-grafica"></i>
+                            </div>
+                        </div>
+
+                        <div class="panel_box_item">
+                            <div class="panel_box_item_text">
+                                <label for="">PM<small style="font-size: 10px; font-weight: bold;">2.5</small></label>
+                            </div>
+                            <div class="align-items-center px-3">
+                                <i class="fas fa-eye" style="cursor:pointer;"
+                                data-toggle="modal" data-target="#modal-grafica"></i>
+                            </div>
+                        </div>
+
+                        <div class="panel_box_item">
+                            <div class="panel_box_item_text">
+                                <label for="">PM<small style="font-size: 10px; font-weight: bold;">10</small></label>
+                            </div>
+                            <div class="align-items-center px-3">
+                                <i class="fas fa-eye" style="cursor:pointer;"
+                                data-toggle="modal" data-target="#modal-grafica"></i>
+                            </div>
+                        </div>
+                    </div>
                     
                 </div>
                 <div class="card-footer">
@@ -222,4 +307,24 @@
         </div>
     </div>
 </aside>
+<!-- modal graficas-->
+<div class="modal fade" id="modal-grafica">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Gráfica de componentes en el aire</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <canvas id="chartMap" style="width:100%;" class="chartjs-render-monitor">
+
+            </canvas>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--graficas-->
     

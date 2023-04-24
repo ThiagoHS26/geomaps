@@ -7,6 +7,7 @@ import { NoFoundPageComponent } from './no-found-page/no-found-page.component';
 import { AuthModule } from './auth/auth.module';
 import { PagesModule } from './pages/pages.module';
 import { AppRoutingModule } from './app-routing.module';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
     AppRoutingModule,
     AuthModule,
-    PagesModule
+    PagesModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

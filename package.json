@@ -21,13 +21,16 @@
     "@angular/router": "~10.2.4",
     "@types/geojson": "^7946.0.10",
     "angular-datatables": "^6.0.0",
+    "chart.js": "^2.9.3",
     "datatables.net": "^1.13.1",
     "datatables.net-dt": "^1.13.1",
     "jquery": "^3.6.2",
     "leaflet": "^1.7.1",
+    "ng2-charts": "^2.3.2",
     "rxjs": "~6.6.0",
     "sweetalert2": "^11.6.15",
     "tslib": "^2.0.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

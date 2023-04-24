@@ -5,6 +5,7 @@ import { geoJSON, icon,Map,Marker,marker,tileLayer } from 'leaflet';
 import { Marcador } from 'src/app/models/marker.model';
 import { PlacesService } from 'src/app/services';
 import { GeoService } from 'src/app/services/geoLocation.service';
+import * as XLSX from 'xlsx';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,10 +15,12 @@ import Swal from 'sweetalert2';
 })
 export class CreateMarkerComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  public ExcelData : any;
   public marcador:Marcador;
   public map2:any;
   public newPoint:any=[];
   public currentlyCoords:any;
+  public dataExcel:any=[];
 
   /*Reactive form */
 
@@ -30,7 +33,7 @@ export class CreateMarkerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit():void{
     setTimeout(()=>{
-      this.reference_marker();
+      //this.reference_marker();
     },1500);
   }
 
@@ -51,6 +54,72 @@ export class CreateMarkerComponent implements OnInit, AfterViewInit, OnDestroy {
     localStorage.setItem('coords',JSON.stringify(this.currentlyCoords));
   }
 
+  readExcel(event:any){
+    let file = event.target.files[0];
+    let fileRader = new FileReader();
+    fileRader.readAsBinaryString(file);
+
+    fileRader.onload = (e)=>{
+      var workBook = XLSX.read(fileRader.result,{type:'binary'});
+      var sheetNames = workBook.SheetNames;
+      this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]]);
+    }
+  }
+
+  sendData(){
+    if(!this.ExcelData){
+      alert('No has seleccionado nada');
+    }else{
+      this.ExcelData.forEach(element => {
+        this.dataExcel.push({
+          name:element.name,
+          state:element.state,
+          ica_dates:{
+            carbon_monoxide:element.carbon_monoxide,
+            nitrogen_dioxide:element.nitrogen_dioxide,
+            ozone:element.ozone,
+            hidrogen_sulfide:element.hidrogen_sulfide,
+            sulfur_dioxide:element.sulfur_dioxide,
+            pm_25:element.pm_25,
+            pm_10:element.pm_10
+          },
+          geometry:{
+            coordinates:(element.geometry).split(',').map(function(item){
+              return parseFloat(item)
+            })
+          }
+        });
+      });
+      //console.log(this.dataExcel);
+      this._placesSvc.insertExcelData(this.dataExcel).subscribe(
+        (res:any)=>{
+          Swal.fire(
+            {
+              icon:'success',
+              title:'Datos ingresados',
+              text:'Excel cargado correctamente',
+              showConfirmButton:false,
+              timer:2000
+            }
+          ).then((result)=>{
+            if(result){
+              this._router.navigate(['/dashboard/mapas']);
+            }
+          })
+        },
+        (error:any)=>{
+          Swal.fire({
+            icon:'error',
+            title:'Error',
+            text:'Algo ha ocurrido!',
+            showConfirmButton:false,
+            timer:1500
+          });
+        }
+      );
+    }
+  }
+
   //Reference marker
   reference_marker(){
     setTimeout(()=>{
@@ -65,53 +134,6 @@ export class CreateMarkerComponent implements OnInit, AfterViewInit, OnDestroy {
         localStorage.setItem('coords',JSON.stringify(this.currentlyCoords));
       });*/
     },1000);
-  }
-
-  //Add new marker on server
-  onSubmit(formMarcador){
-    const coords = JSON.parse(localStorage.getItem('coords'));
-    if(formMarcador.valid){
-      if(coords){
-        this._placesSvc.insertNewMarker({
-          name:formMarcador.value.name,
-          state:formMarcador.value.state,
-          ica_dates:{
-            carbon_monoxide:formMarcador.value.carbon_monoxide,
-            nitrogen_dioxide:formMarcador.value.nitrogen_dioxide,
-            ozone:formMarcador.value.ozone,
-            hidrogen_sulfide:formMarcador.value.hidrogen_sulfide,
-            sulfur_dioxide:formMarcador.value.sulfur_dioxide,
-            pm_25:formMarcador.value.pm_25,
-            pm_10:formMarcador.value.pm_10
-          },
-          geometry:{coordinates:coords}
-        }).subscribe(
-          (res:any)=>{
-            Swal.fire({
-              icon:'success',
-              title:'Exito!',
-              text:'Marcador agregado',
-              showConfirmButton:false,
-              timer:1000
-            }).then((result)=>{
-              if(result){
-                this._router.navigate(['/dashboard/mapas']);
-              }
-            });
-          },
-          (error:any)=>{
-            Swal.fire({
-              icon:'error',
-              title:'Error',
-              text:'Algo ha ocurrido!',
-              showConfirmButton:false,
-              timer:1500
-            });
-            console.log(error);
-          }
-        );
-      }
-    }
   }
 
   ngOnDestroy(): void {
